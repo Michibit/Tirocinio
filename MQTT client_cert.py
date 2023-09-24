@@ -4,8 +4,7 @@ import time
 import json
 
 
-# Configura i dettagli di connessione al broker MQTT
-broker_address = "localhost"  # Indirizzo IP o nome host del tuo broker MQTT Docker
+broker_address = "localhost"  # Indirizzo IP o nome host del broker MQTT
 port = 8883  # Porta di default per MQTT con supporto TLS/SSL
 topic = "temperaturaTopic"
 
@@ -61,9 +60,9 @@ def publish(client):
 
 # Crea un client MQTT
 client = mqtt.Client()
+
+# Autenticazione - Username e Password - Certificato
 client.tls_set(cerfile)
-
-
 client.username_pw_set(username, password)
 
 # Imposta la funzione di callback per la connessione
