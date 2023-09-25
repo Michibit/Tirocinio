@@ -16,8 +16,13 @@ topic = "temperaturaTopic"
 client_id = f'Subscriber-{random.randint(0, 1000)}'
 
 # Credenziali di accesso
-username = 'michi'
-password = 'michi'
+username = 'admin1'
+password = 'admin@123'
+
+
+cerfile = "caBuono.crt"  # Certificato CA del broker MQTT
+cerClient = "client.crt"  # Certificato del Client
+keyClient = "client.key"
 
 
 def connect_mqtt():
@@ -30,7 +35,8 @@ def connect_mqtt():
     # Setto i vari campi del client
     client = mqtt_client.Client(client_id)  #  ID
     # Autenticazione - Username e Password - Certificato
-    client.tls_set("caBuono.crt")
+    client.tls_set(cerfile, cerClient, keyClient)
+
     client.username_pw_set(username, password)
 
     #  Stabilisco connessione
