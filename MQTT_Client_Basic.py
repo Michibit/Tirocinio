@@ -17,8 +17,8 @@ topic = "temperaturaTopic"
 client_id = f'Publisher-{random.randint(0, 1000)}'
 
 # Credenziali di accesso
-username = 'michi'
-password = 'michi'
+username = 'admin2'
+password = 'admin@123'
 
 
 def connect_mqtt():
@@ -29,8 +29,11 @@ def connect_mqtt():
             print("Non sono riuscito a connettermi, return code %d\n", rc)
 
     # Setto i vari campi del client
-    client = mqtt_client.Client(client_id)  #  ID
-    # Autenticazione - Username e Password -
+
+    # ID
+    client = mqtt_client.Client(client_id)  
+
+    # Autenticazione - Username e Password
     client.username_pw_set(username, password)
 
     #  Stabilisco connessione
@@ -43,8 +46,6 @@ def publish(client):
     #  Inizializzo variabili
     stanze = ["Salone", "Stanza da letto", "Soggiorno", "Bagno"]
     temperature = random.randint(0, 50)
-
-    msg_count = 1
     while True:
 
         # Estrai casualmente una stanza dalla lista
@@ -65,30 +66,30 @@ def publish(client):
         json_string = json.dumps(data, indent=2)
 
         # Pubblicazione del messaggio
-        result = client.publish(topic, json_string, qos = 2)
+        result = client.publish(topic, json_string, qos=2)
 
         #  Verifica se il messaggio è stato inviato
         status = result[0]
         if status == 0:
-            print(f"Inviato correttamente al topic: {topic}")
+            print(
+                f"Inviato correttamente al topic: {topic} n: {str(result[1])}")
         else:
             print(f"Impossibile inviare il msg al topic: {topic}")
         msg_count += 1
 
-        #  Ogni 5 iterazioni cambio i parametri
-    
-
 
 def run():
     client = connect_mqtt()
-    
-    # Apro connessione 
+
+    # Apro connessione
     client.loop_start()
 
     publish(client)
 
     # Chiudo connessione
+    client.disconnect()
     client.loop_stop()
+    
 
 
 if __name__ == '__main__':

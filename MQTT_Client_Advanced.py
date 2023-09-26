@@ -9,10 +9,10 @@ port = 8883  # Porta di default per MQTT con supporto TLS/SSL
 topic = "temperaturaTopic"
 
 # Credenziali di accesso
-username = 'admin2'
-password = 'admin@123'
 
-cerfile = "caBuono.crt"  # Certificato CA del broker MQTT
+cerfile = "/cert/caBuono.crt"  # Certificato CA del broker MQTT
+cerClient = "client.crt"  # Certificato del Client 
+keyClient = "client.key" # Chiave privata del client
 
 
 def on_connect(client, userdata, flags, rc):
@@ -48,25 +48,25 @@ def publish(client):
         json_string = json.dumps(data, indent=2)
 
         # Pubblicazione del messaggio
-        result = client.publish(topic, json_string, qos = 1)
+        result = client.publish(topic, json_string, qos=2)
 
         #  Verifica se il messaggio è stato inviato
         status = result[0]
-        print(result)
         if status == 0:
-            print(f"Inviato correttamente al topic: {topic}")
+            print(
+                f"Inviato correttamente al topic: {topic} n: {str(result[1])}")
         else:
             print(f"Impossibile inviare il msg al topic: {topic}")
         msg_count += 1
 
+
 # Crea un client MQTT
 client = mqtt.Client()
 
-# Autenticazione - Username e Password - Certificato
-client.tls_set(cerfile)
-client.username_pw_set(username, password)
+# AUTENTICAZIONE - Certificato CA - Certificato client - Chiave client
+client.tls_set(cerfile, cerClient, keyClient)
 
-# Imposta la funzione di callback per la connessione
+
 client.on_connect = on_connect
 
 # Connessione al broker MQTT
