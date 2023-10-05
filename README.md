@@ -19,11 +19,11 @@ Questi script implementano un client e un subscriber MQTT, eseguendo l'autentica
 
 ### MQTT Client & Subscriber Intermediate
 
-Questi script implementano un client e un subscriber MQTT, eseguendo l'autenticazione con **USERNAME - PASSWORD + CERTIFICATO CA**.
+Questi script implementano un client e un subscriber MQTT, eseguendo l'autenticazione con **USERNAME - PASSWORD + CERTIFICATO CA**, quindi abilitando il protocollo TLS/SSL.
 
 ### MQTT Client & Subscriber Advanced
 
-Questi script implementano un client e un subscriber MQTT, eseguendo l'autenticazione con **CERTIFICATO CA + CERTIFICATO CLIENT + CHIAVE CLIENT**.
+Questi script implementano un client e un subscriber MQTT, eseguendo l'autenticazione con **CERTIFICATO CA + CERTIFICATO CLIENT + CHIAVE CLIENT**, quindi abilitando il protocollo TLS/SSL e esegurndo la Mutua Autenticazione.
 
 ## Istruzioni per l'Utilizzo
 
@@ -31,6 +31,4 @@ Ciascuno degli script può essere eseguito indipendentemente. Tuttavia, prima di
 
 ```bash
 pip install paho-mqtt
-
-
 
