@@ -1,51 +1,33 @@
+import paho.mqtt.client as mqtt
 import random
 import time
 import json
-from paho.mqtt import client as mqtt_client
 
-# Broker utilizzato
-broker = 'localhost'
 
-# Porta in cui il broker ascolta
-port = 1883
-
-# Topic del messaggio
+broker_address = "localhost"  # Indirizzo IP o nome host del broker MQTT
+port = 8883  # Porta di default per MQTT con supporto TLS/SSL
 topic = "temperaturaTopic"
 
-
-# Genero un ID - Client
-client_id = f'Publisher-{random.randint(0, 1000)}'
-
 # Credenziali di accesso
-username = 'admin2'
-password = 'admin@123'
+
+cerfile = "MOSQUITTO/cert/caBuono.crt"  # Certificato CA del broker MQTT
+cerClient = "MOSQUITTO/cert/client.crt"  # Certificato del Client
+keyClient = "MOSQUITTO/cert/client.key"  # Chiave privata del client
 
 
-def connect_mqtt():
-    def on_connect(client, userdata, flags, rc):
-        if rc == 0:
-            print("Connessione Effettuata!")
-        else:
-            print("Non sono riuscito a connettermi, return code %d\n", rc)
-
-    # Setto i vari campi del client
-
-    # ID
-    client = mqtt_client.Client(client_id)  
-
-    # Autenticazione - Username e Password
-    client.username_pw_set(username, password)
-
-    #  Stabilisco connessione
-    client.on_connect = on_connect
-    client.connect(broker, port)
-    return client
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("Connessione al broker MQTT riuscita")
+    else:
+        print(f"Connessione al broker MQTT fallita, codice di ritorno: {rc}")
 
 
 def publish(client):
     #  Inizializzo variabili
     stanze = ["Salone", "Stanza da letto", "Soggiorno", "Bagno"]
     temperature = random.randint(0, 50)
+
+    msg_count = 1
     while True:
 
         # Estrai casualmente una stanza dalla lista
@@ -75,22 +57,25 @@ def publish(client):
                 f"Inviato correttamente al topic: {topic} n: {str(result[1])}")
         else:
             print(f"Impossibile inviare il msg al topic: {topic}")
-        msg_count += 1
 
 
-def run():
-    client = connect_mqtt()
+# Crea un client MQTT
+client = mqtt.Client()
 
-    # Apro connessione
-    client.loop_start()
-
-    publish(client)
-
-    # Chiudo connessione
-    client.disconnect()
-    client.loop_stop()
-    
+# AUTENTICAZIONE - Certificato CA - Certificato client - Chiave client
+client.tls_set(cerfile, cerClient, keyClient)
 
 
-if __name__ == '__main__':
-    run()
+client.on_connect = on_connect
+
+# Connessione al broker MQTT
+client.connect(broker_address, port)
+
+# Avvio del loop del client MQTT
+client.loop_start()
+
+publish(client)
+
+# Disconnessione dal broker MQTT
+client.disconnect()
+client.loop_stop()

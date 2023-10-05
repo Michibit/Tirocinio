@@ -1,7 +1,10 @@
 from paho.mqtt import client as mqtt_client
+from colorama import Fore, Back, Style, init
 import json
 import random
 
+
+init(autoreset=True)
 # Indrizzo del Broker utilizzato
 broker = 'localhost'
 
@@ -16,11 +19,10 @@ topic = "temperaturaTopic"
 client_id = f'Subscriber-{random.randint(0, 1000)}'
 
 # Credenziali di accesso
-username = 'admin1'
-password = 'admin@123'
-
-
-cerfile = "/cert/caBuono.crt"  # Certificato CA del broker MQTT
+# Certificato CA del broker MQTT
+cerfile = "MOSQUITTO/cert/caBuono.crt"
+cerClient = "MOSQUITTO/cert/clientSub.crt"  # Certificato del Client
+keyClient = "MOSQUITTO/cert/clientSub.key"  # Chiave del Client
 
 
 def connect_mqtt():
@@ -32,10 +34,9 @@ def connect_mqtt():
 
     # Setto i vari campi del client
     client = mqtt_client.Client(client_id)  #  ID
-    # Autenticazione - Username e Password - Certificato
-    client.tls_set(cerfile)
+    # Autenticazione  - Certificato CA - Certificato Client - Chiave Client
+    client.tls_set(cerfile, cerClient, keyClient)
 
-    client.username_pw_set(username, password)
 
     #  Stabilisco connessione
     client.on_connect = on_connect
@@ -43,12 +44,28 @@ def connect_mqtt():
     return client
 
 
+def print_json_field(key, value, key_color, value_color):
+    print(f"{key_color}{key}:{Style.RESET_ALL} {value_color}{value}{Style.RESET_ALL}")
+
+
+def print_colored_json(data, topic):
+    print(Back.BLUE + Fore.WHITE + "Messaggio da " +
+          Back.RED + Fore.WHITE + topic + Style.RESET_ALL)
+    print("\n{")
+
+    for key, value in data.items():
+        print_json_field(f'"{key}"', json.dumps(
+            value, indent=4), Fore.GREEN, Fore.YELLOW)
+
+    print("\n")
+
+
+
+
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
         decoded_message = str(msg.payload.decode("utf-8"))
-
-        print(
-            f"Ho ricevuto:\n `{json.loads(decoded_message)}`\n dal topic: `{msg.topic}`\n\n")
+        print_colored_json(json.loads(decoded_message), msg.topic)
 
     client.subscribe(topic)
     client.on_message = on_message

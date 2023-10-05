@@ -1,4 +1,5 @@
 from paho.mqtt import client as mqtt_client
+from colorama import Fore, Back, Style, init
 import json
 import random
 
@@ -6,7 +7,7 @@ import random
 broker = 'localhost'
 
 # Porta in cui il broker ascolta
-port = 8883
+port = 1883
 
 # Topic del messaggio
 topic = "temperaturaTopic"
@@ -16,9 +17,12 @@ topic = "temperaturaTopic"
 client_id = f'Subscriber-{random.randint(0, 1000)}'
 
 # Credenziali di accesso
-cerfile = "/cert/caBuono.crt"  # Certificato CA del broker MQTT
-cerClient = "client.crt"  # Certificato del Client
-keyClient = "client.key" # Chiave del Client
+username = 'admin1'
+password = 'admin@123'
+
+
+# Inizializza colorama per abilitare la formattazione dei colori
+init(autoreset=True)
 
 
 def connect_mqtt():
@@ -29,10 +33,11 @@ def connect_mqtt():
             print("Non sono riuscito a connettermi, return code %d\n", rc)
 
     # Setto i vari campi del client
-    client = mqtt_client.Client(client_id)  #  ID
-    # Autenticazione  - Certificato CA - Certificato Client - Chiave Client
-    client.tls_set(cerfile, cerClient, keyClient)
+    #  ID
+    client = mqtt_client.Client(client_id)
 
+    # Autenticazione - Username e Password
+    client.username_pw_set(username, password)
 
     #  Stabilisco connessione
     client.on_connect = on_connect
@@ -40,12 +45,27 @@ def connect_mqtt():
     return client
 
 
+def print_json_field(key, value, key_color, value_color):
+    print(f"{key_color}{key}:{Style.RESET_ALL} {value_color}{value}{Style.RESET_ALL}")
+
+
+def print_colored_json(data, topic):
+    print(Back.BLUE + Fore.WHITE + "Messaggio da " +
+          Back.RED + Fore.WHITE + topic + Style.RESET_ALL)
+    print("\n{")
+
+    for key, value in data.items():
+        print_json_field(f'"{key}"', json.dumps(
+            value, indent=4), Fore.GREEN, Fore.YELLOW)
+
+    print("\n")
+
+
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
         decoded_message = str(msg.payload.decode("utf-8"))
-
-        print(
-            f"Ho ricevuto:\n `{json.loads(decoded_message)}`\n dal topic: `{msg.topic}`\n\n")
+        print(decoded_message)
+        # print_colored_json(json.loads(decoded_message), msg.topic)
 
     client.subscribe(topic)
     client.on_message = on_message
