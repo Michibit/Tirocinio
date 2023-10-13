@@ -1,11 +1,12 @@
 import paho.mqtt.client as mqtt
+import ssl
 import json
 import random
 import time
 
 # Definisci i parametri di connessione a ThingsBoard
 THINGSBOARD_HOST = "localhost"
-ACCESS_TOKEN = "jsgyhomvlpe4c4t0gxln"
+ACCESS_TOKEN = "0fhjz322s4fm54osnof9"
 
 TOPIC = "v1/devices/me/telemetry"
 PORT = 1883
