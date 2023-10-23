@@ -4,7 +4,7 @@ I seguenti script sono stati sviluppati come parte del mio tirocinio presso Syst
 
 # MOSQUITTO Scripts
 
-Questa cartella contiene script Python che implementano varie configurazioni di client MQTT e subscriber MQTT con l'ausilio del broker MOSQUITTO per l'installazione segui questa [guida](https://github.com/sukesh-ak/setup-mosquitto-with-docker).
+Questa cartella contiene script Python che implementano varie configurazioni di client MQTT e subscriber MQTT con l'ausilio del broker MOSQUITTO (per l'installazione segui questa [guida](https://github.com/sukesh-ak/setup-mosquitto-with-docker)).
 Gli script consentono di inviare messaggi contenenti la temperatura relativa a una stanza di una casa e di visualizzarli sulla console. Ogni script si differenzia per i **metodi di autenticazione** utilizzati.
 
 
