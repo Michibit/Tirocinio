@@ -53,7 +53,6 @@ def publish_data():
         print(f"Dati inviati: {payload}")
 
         # Attendi 5 secondi prima di inviare il prossimo set di dati
-        time.sleep(5)
 
 # Avvia la pubblicazione dei dati
 publish_data()

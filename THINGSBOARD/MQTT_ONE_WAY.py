@@ -5,7 +5,7 @@ import time
 
 # Definisci i parametri di connessione a ThingsBoard
 THINGSBOARD_HOST = "localhost"
-ACCESS_TOKEN = "fmc1as5uzyrli0wt0tms"
+ACCESS_TOKEN = "whl80cf4p7ia5iazux98"
 
 TOPIC = "v1/devices/me/telemetry"
 PORT = 8883
@@ -22,7 +22,7 @@ def publish_data():
     client.on_connect = on_connect
 
     # Connettiti a ThingsBoard con l'access token
-    client.tls_set("THINGSBOARD/cert/server.pub.pem")
+    client.tls_set("THINGSBOARD/cert/server.pem")
     client.username_pw_set(ACCESS_TOKEN)
     client.connect(THINGSBOARD_HOST, PORT)
 

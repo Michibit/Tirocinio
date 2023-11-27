@@ -7,18 +7,18 @@ import random
 broker = 'localhost'
 
 # Porta in cui il broker ascolta
-port = 1883
+port = 1886
 
 # Topic del messaggio
-topic = "temperaturaTopic"
+topic = "/sensor/data"
 
 
 # Genero un ID - Subscriber
 client_id = f'Subscriber-{random.randint(0, 1000)}'
 
 # Credenziali di accesso
-username = 'admin1'
-password = 'admin@123'
+username = 'user1'
+password = 'michi'
 
 
 # Inizializza colorama per abilitare la formattazione dei colori

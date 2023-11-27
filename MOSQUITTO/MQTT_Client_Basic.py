@@ -17,8 +17,8 @@ topic = "v1/devices/me/telemetry"
 client_id = f'Publisher-{random.randint(0, 1000)}'
 
 # Credenziali di accesso
-username = 'admin2'
-password = 'admin@123'
+username = 'user1'
+password = 'michi'
 
 
 def connect_mqtt():

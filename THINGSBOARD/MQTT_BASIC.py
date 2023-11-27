@@ -6,7 +6,7 @@ import time
 
 # Definisci i parametri di connessione a ThingsBoard
 THINGSBOARD_HOST = "localhost"
-ACCESS_TOKEN = "0fhjz322s4fm54osnof9"
+ACCESS_TOKEN = "nC5cAdl9rVznZCTv0aAc"
 
 TOPIC = "v1/devices/me/telemetry"
 PORT = 1883
