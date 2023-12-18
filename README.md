@@ -1,35 +1,23 @@
 # Introduzione
 
-I seguenti script sono stati sviluppati come parte del mio tirocinio presso System Management S.p.A nell'ambito del protocollo MQTT.
+Gli script seguenti sono stati sviluppati durante il mio tirocinio presso System Management S.p.A.
 
-# MOSQUITTO Scripts
+# Cartella MOSQUITTO
 
-Questa cartella contiene script Python che implementano varie configurazioni di client MQTT e subscriber MQTT con l'ausilio del broker MOSQUITTO (per l'installazione segui questa [guida](https://github.com/sukesh-ak/setup-mosquitto-with-docker)).
-Gli script consentono di inviare messaggi contenenti la temperatura relativa a una stanza di una casa e di visualizzarli sulla console. Ogni script si differenzia per i **metodi di autenticazione** utilizzati.
+Questa cartella contiene script Python che implementano diverse configurazioni di client MQTT e subscriber MQTT tramite il broker MOSQUITTO. Per installare il broker, segui questa [guida](https://github.com/sukesh-ak/setup-mosquitto-with-docker). Gli script permettono l'invio di messaggi contenenti la temperatura di una stanza, visualizzabili sulla console. Ciascuno di essi si distingue per i **metodi di autenticazione** utilizzati.
 
+# Cartella THINGSBOARD
 
-![mqtt-publish-subscribe](https://github.com/Michibit/Tirocinio/assets/16355437/1bf45179-762a-4e2c-bfce-c97ba5b59225)
+Questa cartella contiene script Python che implementano diverse configurazioni di client MQTT con l'ausilio di THINGSBOARD. Gli script consentono l'invio di un payload JSON contenente informazioni come il nome del dispositivo, il tipo, il modello e le varie telemetrie. Ogni script presenta differenze nei **metodi di autenticazione** utilizzati.
 
+## Sottocartella DEVICE PROVISIONING
 
+All'interno di questa sottocartella, troverai script Python che implementano diverse strategie di provisioning per THINGSBOARD. Ciascuno di essi richiede parametri specifici per essere eseguito correttamente.
 
-## Configurazioni Disponibili
+## Sottocartella PROVISION BULK
 
-### MQTT Client & Subscriber Basic
+Questa sottocartella contiene file CSV di esempio per eseguire il Provision Bulk all'interno di Thingsboard.
 
-Questi script implementano un client e un subscriber MQTT, eseguendo l'autenticazione con **USERNAME - PASSWORD**.
+# NOTE
 
-### MQTT Client & Subscriber Intermediate
-
-Questi script implementano un client e un subscriber MQTT, eseguendo l'autenticazione con **USERNAME - PASSWORD + CERTIFICATO CA**, quindi abilitando il protocollo TLS/SSL.
-
-### MQTT Client & Subscriber Advanced
-
-Questi script implementano un client e un subscriber MQTT, eseguendo l'autenticazione con **CERTIFICATO CA + CERTIFICATO CLIENT + CHIAVE CLIENT**, quindi abilitando il protocollo TLS/SSL e esegurndo la Mutua Autenticazione.
-
-## Istruzioni per l'Utilizzo
-
-Ciascuno degli script può essere eseguito indipendentemente. Tuttavia, prima di utilizzarli, assicurati di installare le dipendenze necessarie, inclusi un broker MOSQUITTO e il modulo `paho-mqtt` (se necessario):
-
-```bash
-pip install paho-mqtt
-
+Le cartelle "cert" contengono certificati generati con Open SSL per effettuare i test necessari. Tuttavia, normalmente è consigliato utilizzare certificati validati da un'Authority.

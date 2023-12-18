@@ -5,12 +5,12 @@ import json
 
 
 broker_address = "localhost"  # Indirizzo IP o nome host del broker MQTT
-port = 8883  # Porta di default per MQTT con supporto TLS/SSL
-topic = "temperaturaTopic"
+port = 9001  # Porta di default per MQTT con supporto TLS/SSL
+topic = "/sensor/data/1"
 
 # Credenziali di accesso
 
-cerfile = "MOSQUITTO/cert/caBuono.crt"  # Certificato CA del broker MQTT
+cerfile = "MOSQUITTO/cert/ca.crt"  # Certificato CA del broker MQTT
 cerClient = "MOSQUITTO/cert/client.crt"  # Certificato del Client
 keyClient = "MOSQUITTO/cert/client.key"  # Chiave privata del client
 
@@ -33,19 +33,20 @@ def publish(client):
         # Estrai casualmente una stanza dalla lista
         random.shuffle(stanze)
         time.sleep(1)
-        nome_stanza = stanze[0]
+        temperature = random.randint(0, 50)
+        humidity = random.randint(10, 60)
 
-        # Creazione del messaggio
-        data = {
-            "ts": int(round(time.time() * 1000)),
-            "values": {
-                "name": nome_stanza,
-                "temperature": temperature
-            }
+        # Messaggio da pubblicare
+        payload = {
+        "serialNumber": "SN-002",
+        "sensorType": "Thermometer",
+        "sensorModel": "T1000",
+        "temp": temperature,
+        "hum": humidity
         }
 
         # Conversione in Json
-        json_string = json.dumps(data, indent=2)
+        json_string = json.dumps(payload, indent=2)
 
         # Pubblicazione del messaggio
         result = client.publish(topic, json_string, qos=2)

@@ -4,9 +4,9 @@ import time
 import paho.mqtt.client as mqtt
 
 # Configurazione del broker
-MQTT_BROKER_HOST = "localhost"
+MQTT_BROKER_HOST = "192.168.1.60"
 MQTT_BROKER_PORT = 1886
-MQTT_TOPIC = "/sensor/data/2"
+MQTT_TOPIC = "/sensor/data/1"
 
 #  Credenziali Broker
 USERNAME = "user1"
@@ -34,7 +34,7 @@ while True:
 
     # Messaggio da pubblicare
     payload = {
-        "serialNumber": "SN-002",
+        "serialNumber": "SN-001",
         "sensorType": "Thermometer",
         "sensorModel": "T1000",
         "temp": temperature,

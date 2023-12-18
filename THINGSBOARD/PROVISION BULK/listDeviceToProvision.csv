@@ -1,0 +1,11 @@
+name,type,timeseries,humidity,temperature,credentials
+Device1,Sensor,1638019200000,65.2,22.5,credentials1
+Device2,Actuator,1638019500000,68.7,23.8,credentials2
+Device3,Sensor,1638019800000,71.3,21.0,credentials3
+Device4,Actuator,1638020100000,60.5,25.2,credentials4
+Device5,Sensor,1638020400000,63.8,24.6,credentials5
+Device6,Actuator,1638020700000,66.4,22.8,credentials6
+Device7,Sensor,1638021000000,69.1,23.5,credentials7
+Device8,Actuator,1638021300000,62.7,25.0,credentials8
+Device9,Sensor,1638021600000,67.9,21.7,credentials9
+Device10,Actuator,1638021900000,64.3,24.3,credentials10
